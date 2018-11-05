@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/mainStyle.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/addRecipeStyle.css">
+    <script type="text/javascript" src="../src/Display.js"></script>
+</head>
+
+<body style="overflow: hidden">
+    <nav class="navbar navbar-expand-sm navbar-dark">
+        <!-- <div class="navbar-brand">
+            <img src="../assets/icons/png/dutch-oven-white-48x48.png">
+        </div> -->
+        <h3 id="pageHeader" style="color: white;">Add New Recipe</h3>
+        <button class="addNewIngredientBtn btn-success" onclick=openAddWin()>Add Ingredient
+            <img class="btnAddImg" src="../assets/icons/png/add_white.png">
+        </button>
+        <button class="printPDFButton btn-primary">Print PDF</button>
+        <button class="saveButton btn-default">Save</button>
+    </nav>
+
+    <div class="rightClickPopUp" id='rightClickDirectionPopUp'>
+        <ul>
+            <li id='editDir'>Edit</li>
+            <li id='deleteDir'>Delete</li>
+        </ul>
+    </div>
+    <div class="rightClickPopUp" id='rightClickIngredientPopUp'>
+        <ul>
+            <li id='editIng'>Edit</li>
+            <li id='deleteIng'>Delete</li>
+        </ul>
+    </div>
+    <div class="addRecipeRow">
+        <!-- recipe builder column -->
+        <div class="addRecipeCol">
+
+            <h5>Recipe Builder</h5>
+            <form>
+                <div class="entryRow">
+                    <p class="entryColText">Name: </p>
+                    <input type="text" class="entryCol" id="recipeNameEntry"></input>
+                </div>
+                <div class="entryRow">
+                    <p class="entryColText">Servings:</p>
+                    <input type="number" class="entryCol" id="recipeServingsEntry"></input>
+                </div>
+                <div class="entryRow">
+                    <p class="entryColText">Type:</p>
+                    <select class="entryColDrop" id="recipeTypeDrop">
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Lunch">Lunch</option>
+                        <option value="Dinner">Dinner</option>
+                        <option value="Dessert">Dessert</option>
+                    </select>
+                </div>
+                <div class="entryRow">
+                    <p class="entryColText">Category: </p>
+                    <select class="entryColDrop" id="recipeCategoryDrop">
+                        <option value="Any">Any</option>
+                        <option value="Car Camping/Rafting">Car Camping/Rafting</option>
+                        <option value="Backpacking">Backpacking</option>
+                    </select>
+                </div>
+                <div class="entryRow">
+                    <p class="entryColText">Dietary Level:</p>
+                    <!-- </div>
+                <div class="entryRow"> -->
+
+                    <ul class='checkbox-grid' id="recipeMeatLevelDrop">
+                        <li>
+                            <input type="checkbox" id="Dairy"> Dairy Free</input>
+                            <!-- <label for="Dairy">Dairy Free</label> -->
+
+                        </li>
+                        <li>
+                            <input type="checkbox" id="Gluten"> Gluten Free</input>
+                            <!-- <label for="Gluten">Gluten Free</label> -->
+                        </li>
+                        <li>
+                            <input type="checkbox" id="Vegan"> Vegan</input>
+                            <!-- <label for="Vegan">Vegan</label> -->
+                        </li>
+                        <li>
+                            <input type="checkbox" id="Vegetarian"> Vegetarian</input>
+                            <!-- <label for="Vegetarian">Vegetarian</label> -->
+                        </li>
+                    </ul>
+                    <!-- <select class="entryColDrop" id="recipeMeatLevelDrop">
+                            <option value="">None</option>
+                            <option value="Vegan">Vegan</option>
+                            <option value="Vegetarian">Vegetarian</option>
+                        </select> -->
+
+                </div>
+            </form>
+            <hr>
+            <h6>Ingredients</h6>
+            <form id="ingredientForm">
+                <div class="entryRow" id='entryBoxes'>
+                    <!-- //input box for amount -->
+                    <input type="text" class="entryIngAmountCol"></input>
+                    <!-- //dropdown for descriptor -->
+                    <select class="entryIngDescCol">
+                        <option value="tsp">tsp</option>
+                        <option value="tbs">tbs</option>
+                        <option value="fl-oz">fl-oz</option>
+                        <option value="cup">cup</option>
+                        <option value="qt">qt</option>
+                        <option value="gal">gal</option>
+                        <option value="oz">oz</option>
+                        <option value="lb">lb</option>
+                        <option value="each">each</option>
+                    </select>
+
+
+                    <!-- //autocomplete for item -->
+                    <input class="entryIngItemCol" list="itemsDataList">
+                    <datalist id='itemsDataList'>
+                    </datalist>
+                    </input>
+
+                </div>
+                <div class="entryRow">
+                    <p class="entryIngAmountColText">Amount</p>
+                    <p class="entryIngDescColText">Descriptor</p>
+                    <p class="entryIngItemColText">Ingredient</p>
+                </div>
+                <div class="entryRow">
+                    <p class="noteColText">Note:</p>
+                    <input type="text" class="noteCol"> </input>
+                    <button class="ingReplaceButton btn-primary" onClick="return false">Replace
+                    </button>
+                    <button class="ingButton btn-success" id="addIngredientBtn" onClick="return false">Add
+                        <img class=" btnArrowImg" src="../assets/icons/png/add_white.png ">
+                    </button>
+                </div>
+            </form>
+            <hr>
+            <h6>Directions</h6>
+            <form id="directionForm">
+                <textarea rows="4" cols="47" id="directionEntry" style="border-radius:5px;"></textarea>
+                <button class="dirReplaceButton btn-primary" onClick="return false">Replace
+                </button>
+                <button class="dirButton btn-success" onClick="return false">Add
+                    <img class="btnArrowImg" src="../assets/icons/png/add_white.png">
+                </button>
+            </form>
+        </div>
+        <!-- recipe text column -->
+        <div class="addRecipeCol" id="recipePrint">
+            <h5 id="recipeNamePrint">Recipe Text</h5>
+            <p class="recipeP" id="recipeServingsPrint"></p>
+            <p class="recipeP" id="recipeTypePrint"></p>
+            <p class="recipeP" id="recipeCategoryPrint"></p>
+            <p class="recipeP" id="recipeMeatLevelPrint"></p>
+            <hr id="ingredientHeader" style="visibility: hidden">
+            <h5 id="ingredientHeader" style="visibility: hidden">Ingredients</h5>
+            <ul id="recipeIngredientList"></ul>
+            <hr id="directionHeader" style="visibility: hidden">
+            <h5 id="directionHeader" style="visibility: hidden">Directions</h5>
+            <ol id="recipeDirectionList"></ol>
+        </div>
+    </div>
+    <script>
+        if (typeof module === 'object') { window.module = module; module = undefined; }
+        window.$ = window.jQuery = require('jquery')
+        window.Bootstrap = require('bootstrap')
+        if (window.module) module = window.module;
+
+        const electron = require('electron');
+
+        console.log(window.outerHeight);
+
+        if (window.outerHeight < 700) {
+            var boxsize = document.querySelector(".addRecipeRow")
+            var innards = document.querySelector(".addRecipeCol")
+
+            boxsize.style.height = String(window.outerHeight * .87) + 'px';
+            innards.style.overflowY = "scroll";
+        }
+
+
+        //Array to hold all the items
+        const allItemsArray = new Array();
+        //js file to populate item dropdown list
+        require("../src/itemDropDownlist.js");
+        //js file to handle events while entering recipe
+        require("../src/addRecipe.js");
+
+
+    </script>
+</body>
+
+</html>

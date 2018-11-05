@@ -1,0 +1,298 @@
+* {
+    box-sizing: border-box;
+}
+
+/* Create three unequal columns that floats next to each other */
+.column {
+    float: left;
+    padding-top: 10px;
+    height: 540px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.left {
+  margin-left: 5%;
+  width: 20%;
+  /* background-color: #5D0022; */
+  background-color: rgba(93,0,34, .9);
+  border-radius: 10px 0px 0px 10px;
+}
+
+.middle {
+  width: 70%;
+  padding: 1%;
+  border-radius: 0px 10px 10px 0px;
+  background-color: rgba(240, 234, 214, .19);
+}
+.right{
+    position: relative;
+    width:0%;
+    background-color: rgba(93,0,34, .9);
+    margin-right: 5%;
+    border-radius: 0px 10px 10px 0px;
+    overflow-y: hidden;
+}
+.right h5{
+    color:white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.right hr{
+    background-color: white;
+    margin: 0%;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+.right input{
+    position: absolute;
+    bottom:0;
+    border-radius: 0px 5px 5px 0px;
+    margin: 2%;
+    width: 96%;
+    
+}
+.row{
+    width:100%;
+    
+}
+
+.row h2{
+    width: 40%;
+    margin-left: 1%;
+    margin-right:10%;
+}
+
+.genPdfBtn{
+    float:right;
+    margin-left: 20%;
+    margin-right: 1%;
+    padding-left: 3%;
+    width:20%;
+    margin-top:1%;
+    margin-bottom:10%;
+    border-radius: 10px 10px 10px 10px;
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+}
+
+.tripContentsTop{
+    margin-left: 1%;
+}
+
+
+
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* CSS used here will be applied after bootstrap.css */
+.inline-block{
+    display: inline-block;  
+    }
+    
+.pos-rel{
+    position: relative;
+    z-index: 999;
+    }
+      
+.pos-abs{
+    position: absolute;
+    right: 2%;
+    top: 20%;
+    z-index: 1;
+}
+   
+.overflow-x-fix {overflow-x: hidden;}
+      
+
+
+.tripsList{
+    list-style-type: none;
+    padding: 2%;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.tripsList li{
+    color: white;
+    padding-left: 3%;
+    margin-bottom: .8%;
+    border-radius: 5px 0px 0px 5px;
+    background-color: rgba(0, 0,0, .4);
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.tripsList li:hover{
+    background-color: rgba(255, 255, 255,.5);
+    cursor: pointer;
+}
+
+.tripsList li div{
+    background-color: rgba(255, 255, 255,.0);
+}
+
+.tripsList li p{
+    margin:0%;
+}
+.delBtn{
+    padding-left: 22%;
+    padding-top:0%;
+    margin-top:0%;
+    padding-bottom:0%;
+    height: 5%;
+    width: 100%;
+    color:white;
+    font-weight: bolder;
+    visibility: hidden;
+    
+}
+
+.toggleListBtn{
+    
+    position: absolute;
+    visibility: hidden;
+    width: 4%;
+    padding-top: 20%;
+    padding-bottom: 20%;
+    padding-right: .8%;
+    cursor: pointer;
+}
+.createTripBtn{
+    width: 95%;
+    margin-left: 3%;
+    border-radius: 5px 0px 0px 5px;
+    font-weight: bold;
+}
+#addPlus{
+    
+    height: 10%;
+    width: 10%;
+    margin-left: 10%;
+}
+
+
+#entry_tripName{
+    border-radius: 5px 5px 5px 5px;
+    width: 25%;
+    height: 8.5%;
+    margin-top: 1.5%;
+}
+
+
+
+
+
+.recipesList ul{
+    list-style-type: none;
+    padding: 2%;
+    max-height: 455px;
+    min-block-size: 455px;
+    overflow-y: auto;
+}
+.recipesList ul li{
+    color: white;
+    padding-left: 3%;
+    margin-bottom: .4%;
+    border-radius: 0px 5px 5px 0px;
+    background-color: rgba(0, 0,0, .3);
+    
+}
+.recipesList ul li p{
+    margin: 0%;
+    font-weight: bold;
+}
+
+.recipesList ul li:hover{
+    background-color: rgba(255, 255, 255,.5);
+    cursor: pointer;
+}
+
+#div {
+    width: 350px;
+    height: 70px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+}
+
+.mealDrop{
+   float: right;
+    border:1px solid black;
+    border-radius: 5px;
+    height: 90%;
+    width: 65%;
+    margin: 0%;
+    position: relative;
+    background-color: rgba(185, 185, 185, 0.2);
+}
+.mealDrop p{
+     width: 100%;
+     margin: 0%;
+ }
+#daysContainer ul{
+    position: relative;
+    
+}
+#daysContainer li{
+    position: relative;
+    width: 100%;
+    margin-bottom: 2%;
+    
+}
+#daysContainer li p{
+    margin: 0%;
+    float: left;
+    width:25%;
+}
+#daysContainer li div{
+    margin: 0%;
+    float: left;
+    width:60%;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+
+
+/* styling for headcount input and days input */
+
+.headTitleInput{
+    padding-top: 2%;
+}
+
+.headTitleInput p{
+    padding-top: 2.5%;
+    margin-left: 5%;
+}
+
+.headTitleInput input{
+    margin-top:2%;
+    margin-bottom:2%;
+    margin-left: 8.8%;
+    width: 6.5%;
+    border-radius: 5px;
+}
+
+.daysTitleInput {
+   margin-top:-2%;
+}
+
+.daysTitleInput p{
+    padding-top: 2.5%;
+    margin-left: 5%;
+}
+
+.daysTitleInput input{
+    margin-top:2%;
+    margin-bottom:2%;
+    margin-left: 5%;
+    width: 6.5%;
+    border-radius: 5px;
+}

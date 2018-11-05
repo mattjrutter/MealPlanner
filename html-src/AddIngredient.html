@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- <title>Meal Planner</title> -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/mainStyle.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/addRecipeStyle.css">
+  <script type="text/javascript" src="../src/Display.js"></script>
+</head>
+
+<body style="overflow: hidden">
+  <nav class="navbar navbar-expand-sm navbar-dark">
+    <h2 style="color: white; text-align:left;" id="EIng">Add Ingredient</h2>
+  </nav>
+
+  <div class="col-sm-8 text-left">
+    <form id="frm">
+      Department:
+      <br>
+      <select name="deparment" class="dept entryColDrop" id="dept">
+        <option value="Bread/Pasta/Grains">Bread/Pasta/Grains</option>
+        <option value="Dairy">Dairy</option>
+        <option value="Produce">Produce</option>
+        <option value="Meat/Protein">Meat/Protein</option>
+        <option value="Packaged/Frozen">Packaged/Frozen</option>
+        <option value="Spices/Oils">Spices/Oils</option>
+        <option value="Condiments/Dressings">Condiments/Dressings</option>
+        <option value="Canned">Canned</option>
+        <option value="Misc">Misc.</option>
+      </select>
+      <br>
+      <br> Ingredient Name:
+      <br>
+      <input type="text" name="Ingredient" id="Ing" class="Name entryColDrop" maxlength="26">
+      <br>
+      <br> Notes:
+      <br>
+      <input type="text" id="Notes" name="Notes" class="Notes entryColDrop" maxlength="20">
+      <br>
+      <br>
+      <input class="saveButton" type="submit" name="Add" onclick='AddIngredient()'>
+    </form>
+  </div>
+
+</body>
+
+</html>

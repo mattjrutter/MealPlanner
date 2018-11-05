@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- <title>Meal Planner</title> -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/mainStyle.css">
+</head>
+
+<body>
+
+  <div class="header" style="z-index:10">
+    <nav class="navbar navbar-expand-sm navbar-dark">
+      <div class="navbar-brand">
+        <img src="../assets/icons/png/dutch-oven-white-48x48.png">
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="mainWindow.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Trips.html">Trips</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Recipes.html">Recipes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Ingredients.html">Ingredients</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <body style="z-index:5;">
+
+    <div class="container-fluid text-left" id="mainBody">
+      <div class="row content">
+        <div class="col-sm-2 sidenav" style="background-color:clear;">
+        </div>
+        <div class="col-sm-8 text-center">
+          <h1>Welcome To Your Expedition Menu!</h1>
+          <br>
+          <h4>Here's a quick walkthrough of how to use your Expedition Menu.</h4>
+          <br>
+          <br>
+          <img src="../assets/images/TitleBar.png" alt="Title Bar">
+          <br>
+          <p1>This bar at the top will help you navigate through your Expedition Menu. The white text is the tab you are currently
+            browsing.
+          </p1>
+          <br>
+          <br>
+          <img src="../assets/images/Trips.png" alt="Trips Page" style="width:600px;">
+          <br>
+          <p1>This page displays all the information for creating or editing trips. Click the "Create New Trip" button to start
+            a new trip, or just click an existing trip to edit. Also, delete a trip by hovering over it and clicking on the
+            X.
+          </p1>
+          <br>
+          <br>
+          <img src="../assets/images/Trips-Edit.png" alt="Edit Trips Page" style="width:600px;">
+          <br>
+          <p1>After clicking on add a trip or editing a trip, this is the page you will see. Adjust the head count and number
+            of days accordingly and drag the meals to each slot you want them in. When you're done, click the arrow on the
+            left to submit your changes. The Generate PDF button will generate a shopping list, along with all of the recipes
+            and a trip itenerary.</p1>
+          <br>
+          <br>
+          <img src="../assets/images/Recipes.png" alt="Recipes Page" style="width:600px;">
+          <br>
+          <p1>This page displays a list of all your currently entered Recipes. The "Add New Recipe" button will open the add
+            recipe window. The "Edit" button works similarly. The "Delete" button will peremenantly delete the recipe from
+            all databases.</p1>
+          <br>
+          <br>
+          <img src="../assets/images/Edit-Recipe.png" alt="Edit Recipe Page" style="width:600px;">
+          <br>
+          <p1>This page displays after clicking the "Add" or "Edit" buttons on the recipe page. Here, you can set or adjust the
+            name, servings, type, ingredients and directions for a recipe, along with other specifics. You can delete an
+            ingredient by double-clicking it. Likewise, you may edit a direction by doing the same. The "Save" button submits
+            your changes.</p1>
+          <br>
+          <br>
+          <img src="../assets/images/Ingredients.png" alt="Ingredients Page" style="width:600px;">
+          <br>
+          <p1>This page displays all of the ingredients currently stored in your database. The add, edit and delete buttons do
+            what you may expect them to.</p1>
+          <br>
+          <br>
+          <br>
+          <br>
+          <h1>Thank you for using the Expedition Menu!</h1>
+          <h4>For any maintenance or assistance on this product please contact Team CRAM at any of the following emails:</h4>
+          <br>
+          <p1>Cameron Crow: crowcameron4@gmail.com</p1>
+          <br>
+          <p1>Richard Sterling: richard.sterling.319@gmail.com</p1>
+          <br>
+          <p1>Austin Zanoni: austinzanoni21@gmail.com</p1>
+          <br>
+          <p1>Matt Rutter: mattjrutter1@gmail.com</p1>
+          <br>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <!-- <footer class="text-center">
+    <p>©Team CRAM</p>
+  </footer> -->
+  <script>
+    if (typeof module === 'object') { window.module = module; module = undefined; }
+    window.$ = window.jQuery = require('jquery')
+    window.Bootstrap = require('bootstrap')
+    if (window.module) module = window.module;
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- <title>Meal Planner</title> -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/mainStyle.css">
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-sm navbar-dark">
+    <div class="navbar-brand">
+      <img src="../assets/icons/png/dutch-oven-white-48x48.png">
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="mainWindow.html">Home</a>
+          <li class="nav-item">
+            <a class="nav-link" href="Trips.html">Trips</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="Recipes.html">Recipes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="Ingredients.html">Ingredients</a>
+          </li>
+      </ul>
+    </div>
+  </nav>
+
+  <h1 style="float: left; width:40%; margin-left:3%">Recipes</h1>
+  <button id='newRecipeBtn' class="addNewRecipeBtn btn-success">Add New Recipe
+    <img class="btnAddImg" src="../assets/icons/png/add_white.png">
+  </button>
+
+  <div id="tab_content" class="tab-content">
+    <div class="container tab-pane active">
+      <div id="ingredientsTable">
+        <div class="MYcontainer">
+          <table class="table" id="ingrtab">
+            <thead>
+              <tr>
+                <th>Recipe
+                  <div>Recipe</div>
+                </th>
+                <th>Type
+                  <div>Type</div>
+                </th>
+                <th>
+                  <div></div>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="recipesTable">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- <footer class="container-fluid text-center ">
+      <p>©Team CRAM</p>
+    </footer> -->
+    <script>
+
+      if (typeof module === 'object') { window.module = module; module = undefined; }
+      window.$ = window.jQuery = require('jquery')
+      window.Bootstrap = require('bootstrap')
+      if (window.module) module = window.module;
+
+      const electron = require('electron');
+      const { ipcRenderer } = electron;
+
+      const path = require('path');
+      var PouchDB = require('pouchdb-browser');
+      var recipeDb = new PouchDB('https://fcca7173-27dd-4d0c-b7f7-e4338966059d-bluemix.cloudant.com/recipes', { skip_setup: true });
+      var localRecipeDb = new PouchDB('recipes');
+      localRecipeDb.sync(recipeDb)
+        .on('complete',
+          function () {
+            console.log('recipes dbsync');
+          })
+        .on('error', function (err) {
+          console.log(err)
+        });
+
+      const Recipe = require(path.join('..', "src", 'Recipe.js'));
+      const Ingredient = require(path.join(__dirname, '..', 'src', 'Ingredient.js'))
+      const Item = require(path.join(__dirname, '..', 'src', 'Item.js'))
+      refreshdb();
+
+      var allRecipesArray = new Array();
+
+      function listRecipes() {
+        var recipe = new Recipe();
+        for (var i in allRecipesArray) {
+          recipe = allRecipesArray[i];
+          var table = document.querySelector('#recipesTable')
+          var tr = document.createElement('tr');
+          table.appendChild(tr);
+
+          //create td tags
+          var tdRecipe = document.createElement('td');
+          tdRecipe.style.paddingTop = '25px';
+          tdRecipe.className = "recipeName";
+          tdRecipe.id = "recipeName" + recipe.getName();
+          var tdType = document.createElement('td');
+          tdType.style.paddingTop = '25px';
+
+          //create edit/del buttons
+          var tdBtns = document.createElement('td');
+          var editBtn = document.createElement('button');
+          var editText = document.createTextNode('Edit');
+          editBtn.type = "button";
+          editBtn.className = 'btn btn-primary';
+          editBtn.id = (recipe.getName());
+          editBtn.appendChild(editText);
+          editBtn.style.margin = '1px';  //add padding around buttons
+          editBtn.style.marginLeft = '35%';  // move the buttons more to the right
+
+          editBtn.onclick = function editRecipe() {
+            var activeRecipe = new Recipe();
+            for (var rec in allRecipesArray) {
+              if (allRecipesArray[rec].getId() == this.id) {
+                activeRecipe = allRecipesArray[rec];
+                break;
+
+              }
+
+            }
+            console.log(activeRecipe);
+            // send over recipe to edit window
+            ipcRenderer.send('editRecipeClicked', {
+              recipeID: {
+                id: activeRecipe.getId(),
+                name: activeRecipe.getName(),
+                servings: activeRecipe.getServings(),
+                mealType: activeRecipe.getMealType(),
+                mealCategory: activeRecipe.getMealCategory(),
+                meatLevel: activeRecipe.getMeatLevel(),
+                ingredients: activeRecipe.getIngredients(),
+                directions: activeRecipe.getDirections(),
+              }
+            }, false);
+          }
+
+          var delBtn = document.createElement('button');
+          var delText = document.createTextNode('Delete');
+          delBtn.type = "button";
+          delBtn.className = "btn btn-danger";
+          delBtn.appendChild(delText);
+          delBtn.id = (recipe.getName());
+
+          //ONCLICK FOR DEL BUTTON
+          delBtn.onclick = function deleteRecipe() {
+            var confirmation = confirm('Are you sure you want to delete \"' + this.id + '\"?');
+            if (confirmation == true) {
+              localRecipeDb.get(this.id).then(function (doc) {
+                window.location.reload();
+                return localRecipeDb.remove(doc);
+              });
+            }
+          }
+          //create cell text
+          var recipeTextName = document.createTextNode(recipe.getName());
+          var recipeTextType = document.createTextNode(recipe.getMealType());
+          tdRecipe.appendChild(recipeTextName);
+          tdType.appendChild(recipeTextType);
+          tdBtns.appendChild(editBtn);
+          tdBtns.appendChild(delBtn);
+
+          //add children to tr tag (row)
+          tr.appendChild(tdRecipe);
+          tr.appendChild(tdType);
+          tr.appendChild(tdBtns);
+
+        }
+      }
+
+      function refreshdb() {
+        var recipe;
+        var row;
+
+        localRecipeDb.allDocs({
+          include_docs: true,
+        }).then(function (result) {
+          allRecipes = JSON.parse(JSON.stringify(result));
+          for (row in allRecipes.rows) {
+            recipe = new Recipe();
+            recipe.setId(allRecipes.rows[row].doc._id);
+            recipe.setName(allRecipes.rows[row].doc.recipe_name);
+            recipe.setServings(allRecipes.rows[row].doc.servings);
+            recipe.setMealType(allRecipes.rows[row].doc.mealType);
+            recipe.setMealCategory(allRecipes.rows[row].doc.mealCategory);
+            recipe.initMeatLevel(allRecipes.rows[row].doc.meatLevel);
+            var recipeIngredients = allRecipes.rows[row].doc.ingredients;
+            for (var ing in recipeIngredients) {
+              var ingredient = new Ingredient();
+              ingredient.setAmount(recipeIngredients[ing].amount);
+              ingredient.setDescriptor(recipeIngredients[ing].descriptor);
+              ingredient.setNote(recipeIngredients[ing].note);
+              var item = new Item();
+              item.setDbId(recipeIngredients[ing].itemID);
+              ingredient.setItem(item);
+              recipe.addIngredient(ingredient);
+            }
+            var recipeDirections = allRecipes.rows[row].doc.directions;
+            for (var dir in recipeDirections) {
+              recipe.addDirection(recipeDirections[dir])
+            }
+
+            allRecipesArray.push(recipe);
+          }
+          listRecipes();
+        });
+      }
+
+      var btn = document.querySelector('#newRecipeBtn')
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        ipcRenderer.send('addNewRecipeClicked')
+      })
+
+      var changes = localRecipeDb.changes({
+        since: 'now',
+        live: true,
+        include_docs: true
+      }).on('change', function (change) {
+        window.location.reload();
+      })
+
+
+    </script>
+
+</body>
+
+</html>

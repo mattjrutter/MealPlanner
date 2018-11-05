@@ -1,0 +1,173 @@
+
+    /* Remove the navbar's default margin-bottom and rounded borders */
+
+    .navbar {
+      margin-bottom: 10px;
+      border-radius: 0;
+      background-color: #5D0022;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .sub-header {
+      position: fixed;
+      top: 80px;
+      width: 98%;
+      z-index: -1;
+    }
+
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+
+     .row.content {
+      height: 100%;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+    .container-fluid {
+      margin-top: 100px;
+    }
+
+    .tab-content {
+      top: 200px;
+      position: fixed;
+      bottom:50px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    tbody {
+	margin-bottom: 5%;
+}
+
+    /* Set gray background color and 100% height */
+
+    .sidenav {
+      padding-top: 20px;
+      background-color: #ffffff;
+    }
+
+    /* Set black background color, white text and some padding */
+
+    footer {
+      background-color: #000000;
+      color: white;
+      padding: 15px;
+      position: fixed;
+      margin-top: 10px;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+
+
+    .MYcontainer {
+      /* max-height: 29.5em; */
+      max-height: 480px;
+      overflow-y: auto;
+      /* outline: 1px solid black;
+      outline-offset: -1px; */
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+    tr{
+      border-bottom: 1px solid dimgray;
+    }
+    th, td {
+      font-family: sans-serif;
+      background-color: white;
+      padding: 1em;
+
+    }
+
+    th {
+      text-align: left;
+      color: black;
+      background-color: white;
+
+    }
+
+    #ingredientsTable {
+      position: relative;
+      overflow: hidden;
+    }
+
+
+
+    #ingredientsTable th {
+      white-space: nowrap;
+
+    }
+
+    #ingredientsTable th:first-child div {
+      border-left: none;
+      border-bottom: 1px solid dimgray;
+    }
+
+    #ingredientsTable th div {
+      position: absolute;
+      z-index: 2;
+      font-weight: bold;
+      width: 100%;
+      background-size:contain;
+      color: black;
+      background-color:white;
+      padding: 1rem;
+      margin-left: calc(-1rem - 1px);
+    }
+
+    #ingredientsTable thead div {
+      top: 0;
+    }
+
+    .dept{
+      width:300px;
+      height: 27px;
+      border-width:1px;
+      border-color:black;
+    }
+    .Name{
+      width:15%;
+      height:27px;
+      /* border-color:black; */
+    }
+
+    .Notes {
+      height:27px;
+      width:15%;
+      /* border-color:black; */
+    }
+
+    /* recipes.html styling */
+    .addNewRecipeBtn{
+      float:right;
+      font-weight: bold;
+      border-radius: 5px;
+      margin-top: 1%;
+      margin-right:3%;
+    }
+    .btnAddImg{
+      padding:2%;
+      width:15%;
+      height: 15%;
+    }
+
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {
+        height: auto;
+      }
+    }

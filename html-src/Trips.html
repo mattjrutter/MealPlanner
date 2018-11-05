@@ -1,0 +1,474 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/mainStyle.css">
+  <link rel="stylesheet" tyep="text/css" href="../assets/css/tripsPageStyle.css">
+  <script src="../src/printPDF.js" type="text/javascript"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-sm navbar-dark">
+    <div class="navbar-brand">
+      <img src="../assets/icons/png/dutch-oven-white-48x48.png">
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="mainWindow.html">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="Trips.html">Trips</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="Recipes.html">Recipes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="Ingredients.html">Ingredients</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <div class="row">
+    <h2 style="margin-left: 5%;">Trips</h2>
+  </div>
+
+  <div class="row">
+    <div class="column left">
+      <img class="toggleListBtn" src='../assets/icons/png/arrow_white.png'></img>
+      <button class="createTripBtn btn-success">Create New Trip
+        <img id='addPlus' src='../assets/icons/png/add_white.png'></img>
+      </button>
+      <ul class="tripsList">
+      </ul>
+    </div>
+    <div class="column middle">
+      <div class="tripContents">
+
+      </div>
+    </div>
+    <div class="column right">
+      <div class="recipesList">
+        <h5>Recipes</h5>
+        <hr>
+        <ul>
+        </ul>
+        <input id="searchInput" type="text" placeholder="Search..."></input>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- <footer class="container-fluid text-center">
+    <p>©Team CRAM</p>
+  </footer> -->
+  <script type="text/javascript" src="../src/trips.js"></script>
+  <script>
+    if (typeof module === 'object') { window.module = module; module = undefined; }
+    window.$ = window.jQuery = require('jquery')
+    window.Bootstrap = require('bootstrap')
+    if (window.module) module = window.module;
+
+    const path = require('path');
+    var PouchDB = require('pouchdb-browser');
+
+    var recipeDb = new PouchDB('https://fcca7173-27dd-4d0c-b7f7-e4338966059d-bluemix.cloudant.com/recipes', { skip_setup: true });
+    var localRecipeDb = new PouchDB('recipes')
+
+    localRecipeDb.sync(recipeDb)
+      .on('complete',
+        function () {
+          console.log('recipe dbsync');
+        })
+      .on('error', function (err) {
+        console.log(err)
+      });
+
+    var itemDb = new PouchDB('https://fcca7173-27dd-4d0c-b7f7-e4338966059d-bluemix.cloudant.com/ingredients', { skip_setup: true });
+    var localItemDb = new PouchDB('ingredients');
+
+    localItemDb.sync(itemDb)
+      .on('complete',
+        function () {
+          console.log('item dbsync');
+        })
+      .on('error', function (err) {
+        console.log(err)
+      });
+
+    var db = new PouchDB(
+      'https://fcca7173-27dd-4d0c-b7f7-e4338966059d-bluemix.cloudant.com/trips', { skip_setup: true });
+    var localDb = new PouchDB('trips');
+
+    localDb.sync(db)
+      .on('complete',
+        function () {
+          console.log('trips dbsync');
+        })
+      .on('error', function (err) {
+        console.log(err)
+      });
+
+
+
+
+    require(path.join(__dirname, '../src/trips.js'));
+    const Recipe = require('../src/Recipe.js');
+    const Ingredient = require('../src/Ingredient.js');
+    const Item = require('../src/Item.js');
+    const Trip = require('../src/Trip.js');
+    const Day = require('../src/Day.js');
+
+
+    var activeTrip = new Trip();
+
+    // refreshdb();
+    getAllItems();
+
+    var allTripsArray = new Array();
+    //array to store all items
+    var allItemsArray = new Array();
+    //array to store all recipes
+    var allRecipesArray = new Array();
+
+    //event listener for search box
+    var searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('keyup', function (e) {
+      //what's entered in box to compare
+      var searchStr = searchInput.value;
+      //filter array and return a new array with filtered results
+      var results = allRecipesArray.filter(function (value) {
+        return value.getName().toLowerCase().indexOf(searchStr.toLowerCase()) >= 0;
+      });
+      //list the filtered results
+      listRecipes(results);
+    });
+
+    //function to list recipes in side bar
+    function listRecipes(arrayToList) {
+      var recipe = new Recipe();
+      //get the ul the recipes will live in
+      var ul_recipesList = document.querySelector('.recipesList ul');
+      //reset inner html (so search doesn't stack items on)
+      ul_recipesList.innerHTML = "";
+      //create list items (li) for items in array
+      for (var i in arrayToList) {
+        recipe = arrayToList[i];
+        var li_recipeName = document.createElement('li');
+        li_recipeName.title = "Drag and drop into meal slot"
+        //p elements for the text
+        var p = document.createElement('p');
+        p.appendChild(document.createTextNode(recipe.getName()));
+        p.id = recipe.getName();
+        //make each recipe name draggable
+        p.draggable = "true";
+        p.addEventListener('dragstart', drag, false);
+        li_recipeName.appendChild(p);
+        ul_recipesList.appendChild(li_recipeName);
+      }
+    }
+
+    //function to allow drop (preventing default errors browser may have)
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    //function to handle drag event
+    function drag(ev) {
+      ev.dataTransfer.setData("Text", ev.target.id);
+    }
+
+    //function to handle drop event
+    function drop(ev) {
+      ev.preventDefault();
+      if (ev.target.nodeName == 'P') {
+        console.log('target', ev.target);
+      }
+
+      //clear out what was in the box
+      ev.target.innerHTML = '';
+
+
+      //get the data
+      var data = ev.dataTransfer.getData("Text");
+
+      //clone the node, so it does not remove it from the recipes list
+      var recipe = document.getElementById(data).cloneNode(true);
+
+      //finally add recipe to the drop area
+      ev.target.appendChild(document.createTextNode(recipe.textContent));
+    }
+
+    function getAllItems() {
+      var item;
+      var row;
+
+      localItemDb.allDocs({
+        include_docs: true,
+      }).then(function (result) {
+        allItems = JSON.parse(JSON.stringify(result));
+        for (row in allItems.rows) {
+          item = new Item();
+          item.setDbId(allItems.rows[row].doc._id);
+          item.setItemName(allItems.rows[row].doc.item_name);
+          item.setNote(allItems.rows[row].doc.notes);
+          item.setDepartment(allItems.rows[row].doc.dept)
+          allItemsArray.push(item)
+        }
+        refreshdb()
+      });
+    }
+
+    function refreshdb() {
+      var recipe;
+      var row;
+      localRecipeDb.allDocs({
+        include_docs: true,
+      }).then(function (result) {
+        allRecipes = JSON.parse(JSON.stringify(result));
+        for (row in allRecipes.rows) {
+          recipe = new Recipe();
+          recipe.setId(allRecipes.rows[row].doc._id);
+          recipe.setName(allRecipes.rows[row].doc.recipe_name);
+          recipe.setServings(allRecipes.rows[row].doc.servings)
+          recipe.setMealType(allRecipes.rows[row].doc.mealType);
+          recipe.setMealCategory(allRecipes.rows[row].doc.mealCategory);
+          recipe.setMeatLevel(allRecipes.rows[row].doc.meatLevel);
+          var recipeAllIngredients = allRecipes.rows[row].doc.ingredients;
+          for (var ing in recipeAllIngredients) {
+            var newIngredient = new Ingredient()
+            newIngredient.setAmount(recipeAllIngredients[ing].amount);
+            newIngredient.setDescriptor(recipeAllIngredients[ing].descriptor);
+            newIngredient.setNote(recipeAllIngredients[ing].note);
+
+            allItemsArray.forEach(function (item) {
+              if (item.getDbId() == recipeAllIngredients[ing].itemID) {
+                newIngredient.setItem(item);
+              }
+            });
+            recipe.addIngredient(newIngredient);
+          }
+          var recipeAllDirections = allRecipes.rows[row].doc.directions;
+          for (var dir in recipeAllDirections) {
+            recipe.addDirection(recipeAllDirections[dir])
+          }
+
+
+          allRecipesArray.push(recipe);
+        }
+
+        listRecipes(allRecipesArray);
+        refreshTripsDB();
+      });
+    }
+
+    // function that grabs active recipe and collapses stuff left
+    function collapseLeft(_activeTrip) {
+      activeTrip = _activeTrip;
+      // grab left column rezise
+      var colDivL = document.querySelector('.left');
+      colDivL.style.width = '3%';
+      colDivL.style.overflow = 'hidden';
+      // middle column resize
+      var colDivM = document.querySelector('.middle');
+      colDivM.style.width = '67%';
+      $(colDivM).css('border-radius', '0px');
+      // right column resize
+      var colDivR = document.querySelector('.right');
+      colDivR.style.width = '20%'
+      // hide the list
+      var ul = document.querySelector('.tripsList');
+      ul.style.visibility = 'hidden';
+      // make the expand plus sign visible
+      var toggleListBtn = document.querySelector('.toggleListBtn');
+      toggleListBtn.style.visibility = 'visible';
+      toggleListBtn.title = "View Trips and Save changes";
+      // hide the add button
+      var addBtn = document.querySelector('.createTripBtn');
+      addBtn.style.visibility = 'hidden';
+    }
+
+    // function that populates the side bar with trips
+    function populateTripsSidebar() {
+      // grab trips list elements
+      var tripsUl = document.querySelector('.tripsList');
+      tripsUl.innerHTML = '';
+      // popluate list from array of trips gathered from db
+      allTripsArray.forEach(function (trip) {
+        var li = document.createElement('li');
+        tripsUl.className = "tripsList list-group";
+        li.className = 'tripsList list-group-item pos-rel overflow-x-fix'
+        li.title = 'Click to edit';
+        //li innards
+        var p = document.createElement('p')
+        p.className = 'inline-block'
+        p.appendChild(document.createTextNode(trip.getTripName()));
+        //del btn div
+        var div = document.createElement('div');
+        div.className = 'pull-right pos-abs'
+        var btn = document.createElement('button')
+        btn.className = 'delBtn btn btn-danger'
+        btn.title = 'Click to Delete'
+        btn.appendChild(document.createTextNode('X'));
+        div.addEventListener('mouseover', function () {
+          btn.style.visibility = 'visible';
+        });
+        div.addEventListener('mouseout', function () {
+          btn.style.visibility = 'hidden';
+        });
+        //delete trip event listener
+        btn.addEventListener('click', function (e) {
+          var index = $(e.target).closest('li').index();
+          activeTrip = allTripsArray[index]
+          var confirmation = confirm('Are you sure you want to delete \"' + activeTrip.getTripName() + '\"?');
+          if (confirmation == true) {
+            localDb.get(activeTrip.getTripId()).then(function (doc) {
+              return localDb.remove(doc);
+            });
+            allTripsArray.splice(index, 1);
+            window.location.reload();
+          }
+        });
+        div.appendChild(btn)
+        li.appendChild(p)
+        li.appendChild(div)
+        tripsUl.appendChild(li);
+
+      });
+
+
+      // find list elements of trips
+      var tripsList = document.querySelectorAll('.tripsList li p');
+      // for each li element
+      tripsList.forEach(function (liElm) {
+        // create event listener for each li to collapse list
+        liElm.addEventListener('click', function (e) {
+          collapseLeft();
+
+          // grab trip from array by index from list hovered over
+          activeTrip = allTripsArray[$(e.target).parent().index()];
+          // activeTrip = allTripsArray[$(e.target).index()]; //old
+          editTrip(e, activeTrip)
+        });
+
+
+
+        // create event listener for hover
+        liElm.addEventListener('mouseover', function (e) {
+          // get trip contents tag to populate it
+          var tripContents = document.querySelector('.tripContents');
+          // clear inner html
+          tripContents.innerHTML = '';
+          // grab trip from array by index from list hovered over
+          var trip = allTripsArray[$(e.target).parent().index()];
+
+          //** create trip display **//
+          // createand append recipe name as h2
+          var h2_tripName = document.createElement('h2');
+          h2_tripName.appendChild(document.createTextNode(trip.getTripName()));
+          tripContents.appendChild(h2_tripName);
+
+          // create and append headcount p tag
+          var p_tripHeadCount = document.createElement('p');
+          p_tripHeadCount.appendChild(
+            document.createTextNode('Head Count: ' + trip.getHeadCount()));
+          tripContents.appendChild(p_tripHeadCount);
+
+          // loop through days and populate
+          trip.getDays().forEach(function (day, idx) {
+            var h4_dayHeader = document.createElement('h4');
+            h4_dayHeader.appendChild(document.createTextNode('Day ' + (idx + 1)));
+            tripContents.appendChild(h4_dayHeader);
+            var ul_days = document.createElement('ul');
+            var li_meal = document.createElement('li');
+            // breakfast
+            if (day.getBreakfast().getName() == null) {
+              li_meal.appendChild(
+                document.createTextNode('Breakfast: No meal selected'))
+            } else {
+              li_meal.appendChild(document.createTextNode(
+                'Breakfast: ' + day.getBreakfast().getName()));
+            }
+            ul_days.appendChild(li_meal);
+            li_meal = document.createElement('li');
+            /// lunch
+            if (day.getLunch().getName() == null) {
+              li_meal.appendChild(
+                document.createTextNode('Lunch: No meal selected'))
+            } else {
+              li_meal.appendChild(
+                document.createTextNode('Lunch: ' + day.getLunch().getName()));
+            }
+            ul_days.appendChild(li_meal);
+            li_meal = document.createElement('li');
+            // dinner
+            if (day.getDinner().getName() == null) {
+              li_meal.appendChild(
+                document.createTextNode('Dinner: No meal selected'))
+            } else {
+              li_meal.appendChild(
+                document.createTextNode('Dinner: ' + day.getDinner().getName()));
+            }
+
+            ul_days.appendChild(li_meal);
+            // append all to tripContents
+            tripContents.appendChild(ul_days);
+          });
+        });
+      });
+    }
+
+    function refreshTripsDB() {
+      var trip;
+      var row;
+      localDb.allDocs({
+        include_docs: true,
+      })
+        .then(function (result) {
+          var allTrips = JSON.parse(JSON.stringify(result));
+          for (row in allTrips.rows) {
+            trip = new Trip()
+            trip.setTripId(allTrips.rows[row].doc._id);
+            trip.setTripName(allTrips.rows[row].doc.trip_name);
+            trip.setHeadCount(allTrips.rows[row].doc.headCount);
+            var tripDays = allTrips.rows[row].doc.days;
+            for (var day in tripDays) {
+              var newDay = new Day();
+              allRecipesArray.find(function (rec) {
+                if (rec.getId() == tripDays[day].breakfast) {
+                  console.log(rec);
+                  newDay.setBreakfast(rec);
+                }
+                if (rec.getId() == tripDays[day].lunch) {
+                  newDay.setLunch(rec);
+                }
+                if (rec.getId() == tripDays[day].dinner) {
+                  newDay.setDinner(rec);
+                }
+              });
+
+              trip.addDay(newDay);
+            }
+
+            allTripsArray.push(trip);
+          }
+          console.log(allTripsArray)
+          populateTripsSidebar();
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+    }
+  </script>
+
+</body>
+
+</html>

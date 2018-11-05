@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" id="Ingredients">
+
+<!-- Contains all the needed imports, and also the title of the program -->
+
+<head>
+  <title>Expedition Menu</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/mainStyle.css">
+  <script type="text/javascript" src="../src/Display.js"></script>
+</head>
+
+<div class="header">
+  <nav class="navbar navbar-expand-sm navbar-dark">
+    <div class="navbar-brand">
+      <img src="../assets/icons/png/dutch-oven-white-48x48.png">
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+
+      <!-- These set the titles of each tab, which one is active and the links to each other html.-->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="mainWindow.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="Trips.html">Trips</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="Recipes.html">Recipes</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="Ingredients.html">Ingredients</a>
+        </li>
+      </ul>
+    </div>
+</div>
+</nav>
+
+<h1 id="ingredientHead" style="float:left;margin-left: 3%;">Ingredients</h1>
+<button class="addNewRecipeBtn btn-success" style="float:right; margin-right:3%;" onclick=openAddWin()>Add Ingredient
+  <img class="btnAddImg" src="../assets/icons/png/add_white.png">
+</button>
+
+<div class="container-fluid">
+  <div class="sub-header">
+    <p id="errors"></p>
+    <ul class="nav nav-tabs" style="margin-top:75px;">
+      <li class="nav-item">
+        <a id="link" class="nav-link active" data-toggle="tab" href="#breadTab" onclick=ToTop()>Bread/Pasta/Grains</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#dairyTab" onclick=ToTop()>Dairy</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#produceTab" onclick=ToTop()>Produce</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#meatTab" onclick=ToTop()>Meat/Protein</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#packagedTab" onclick=ToTop()>Packaged/Frozen</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#spicesTab" onclick=ToTop()>Spices/Oils</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#condimentsTab" onclick=ToTop()>Condiments/Dressings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#cannedTab" onclick=ToTop()>Canned</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#miscTab" onclick=ToTop()>Misc.</a>
+      </li>
+  </div>
+  </ul>
+
+  <div id="tab_content" class="tab-content">
+    <div id="breadTab" class="container tab-pane active">
+      <div id="ingredientsTable">
+        <div class="MYcontainer">
+          <table class="table" id="ingrtab">
+            <thead>
+              <tr>
+                <th>Name
+                  <div>Name</div>
+                </th>
+                <th>Notes
+                  <div>Notes</div>
+                </th>
+                <th>
+                  <div></div>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="Bread-Pasta-Grains">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="dairyTab" class="container tab-pane fade">
+      <div id="ingredientsTable">
+        <div class="MYcontainer">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name
+                  <div>Name</div>
+                </th>
+                <th>Notes
+                  <div>Notes</div>
+                </th>
+                <th>
+                  <div></div>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="Dairy">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="produceTab" class="container tab-pane fade">
+      <div id="ingredientsTable">
+        <div class="MYcontainer">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name
+                  <div>Name</div>
+                </th>
+                <th>Notes
+                  <div>Notes</div>
+                </th>
+                <th>
+                  <div></div>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="Produce">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="meatTab" class="container tab-pane fade">
+      <div id="ingredientsTable">
+        <div class="MYcontainer">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name
+                  <div>Name</div>
+                </th>
+                <th>Notes
+                  <div>Notes</div>
+                </th>
+                <th>
+                  <div></div>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="Meat-Protein">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="packagedTab" class="container tab-pane fade">
+      <div id="ingredientsTable">
+        <div class="MYcontainer">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name
+                  <div>Name</div>
+                </th>
+                <th>Notes
+                  <div>Notes</div>
+                </th>
+                <th>
+                  <div></div>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="Packaged-Frozen">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="spicesTab" class="container tab-pane fade">
+      <div id="ingredientsTable">
+        <div class="MYcontainer">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name
+                  <div>Name</div>
+                </th>
+                <th>Notes
+                  <div>Notes</div>
+                </th>
+                <th>
+                  <div></div>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="Spices-Oils">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="condimentsTab" class="container tab-pane fade">
+      <div id="ingredientsTable">
+        <div class="MYcontainer">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name
+                  <div>Name</div>
+                </th>
+                <th>Notes
+                  <div>Notes</div>
+                </th>
+                <th>
+                  <div></div>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="Condiments-Dressings">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="cannedTab" class="container tab-pane fade">
+      <div id="ingredientsTable">
+        <div class="MYcontainer">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name
+                  <div>Name</div>
+                </th>
+                <th>Notes
+                  <div>Notes</div>
+                </th>
+                <th>
+                  <div></div>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="Canned">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="miscTab" class="container tab-pane fade">
+      <div id="ingredientsTable">
+        <div class="MYcontainer">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name
+                  <div>Name</div>
+                </th>
+                <th>Notes
+                  <div>Notes</div>
+                </th>
+                <th>
+                  <div></div>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="Misc">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  if (typeof module === 'object') { window.module = module; module = undefined; }
+  window.$ = window.jQuery = require('jquery')
+  window.Bootstrap = require('bootstrap')
+  if (window.module) module = window.module;
+
+  var ingredients;
+  var allItemsArray = new Array();
+  var buttons = new Array();
+  const path = require('path');
+  var PouchDB = require('pouchdb-browser');
+
+
+
+
+
+  const Item = require(path.join('..', "src", '/Item.js'));
+  var db = new PouchDB('https://fcca7173-27dd-4d0c-b7f7-e4338966059d-bluemix.cloudant.com/ingredients');
+  var localDb = new PouchDB('ingredients');
+
+  localDb.sync(db)
+    .on('complete',
+      function () {
+        console.log('dbsync')
+      })
+    .on('error', function (err) {
+      console.log(err);
+    });
+
+
+  //Commented out db stuff to add csv files to db
+  //
+  // DELETE DB
+  // db.destroy()
+  //   .then(function (response) {
+  //     console.log(response)
+  //   })
+  //   .catch(function (err) {
+  //     console.log(err);
+  //   });
+  //  END DELETEDB
+
+  // const d3 = require('d3');
+
+  // var fileList = ["bread-pasta-grain", "canned", "condiments-dressings", "dairy", "meat", "packaged-frozen", "produce", "spices-oil-fat"];
+  // var deptList = ["Bread/Pasta/Grains", "Canned", "Condiments/Dressings", "Dairy", "Meat/Protein", "Packaged/Frozen", "Produce", "Spices/Oils"];
+
+  // d3.csv(
+  //   'file:////home/cameron/Desktop/Project/MealPlanner/dbstuff/' + fileList[7] + '.csv',
+  //   function (data) {
+  //     data.forEach(function (elm) {
+  //       console.log(elm);
+  //       db.put({
+  //         _id: elm.item_name,
+  //         doc_type: 'ingredient',
+  //         item_name: elm.item_name,
+  //         descriptor: elm.descriptor,
+  //         notes: elm.notes,
+  //         dept: 'Spices/Oils'
+  //       })
+  //         .then(function (response) {
+  //           console.log(response);
+  //         })
+  //         .catch(function (err) {
+  //           console.log(err);
+  //         })
+  //       console.log(elm.item_name + ' ' + elm.descriptor + ' ' +
+  //         elm.notes)
+  //     });
+  //   });
+
+  refreshdb();
+
+
+  const electron = require('electron');
+  const { ipcRenderer } = electron;
+
+  function listIngredients() {
+    var item = new Item();
+    for (var i in allItemsArray) {
+      item = allItemsArray[i];
+      var table = document.querySelector('#' + item.getDepartment().replace(/\//g, "-"));
+      var tr = document.createElement('tr');
+      table.appendChild(tr);
+
+      //create td tags
+      var tdName = document.createElement('td');
+      tdName.style.paddingTop = '25px';  //dynamically add padding to cetner vertically in row
+      tdName.className = "name";
+      tdName.id = "name" + item.getItemName();
+      var tdNote = document.createElement('td');
+      tdNote.style.paddingTop = '25px'
+      var tdBtns = document.createElement('td');
+
+
+      //create edit/del buttons
+      var editBtn = document.createElement('button');
+      var editText = document.createTextNode('Edit');
+      editBtn.type = "button";
+      editBtn.className = "btn btn-primary";
+      editBtn.id = (item.getItemName());
+      editBtn.onclick = function myFunction(editBtn) {
+        //alert(this.id);
+        var department = '';
+        var name = '';
+        var notes = '';
+        //Opens database to store into local vars.
+        localDb.get(this.id).then(function (doc) {
+          department = doc.dept;
+          name = doc.item_name;
+          notes = doc.notes;
+          openEditWin(department, name, notes);
+        });
+
+      }
+      editBtn.appendChild(editText);
+      editBtn.style.margin = '5px';  //add padding around buttons
+      editBtn.style.marginLeft = '35%';  // move the buttons more to the right
+      var delBtn = document.createElement('button');
+      var delText = document.createTextNode('Delete');
+      delBtn.type = "button";
+      delBtn.className = "btn btn-danger";
+      delBtn.appendChild(delText);
+      delBtn.id = (item.getItemName());
+      delBtn.onclick = function myFunction2() {
+        var r = confirm("Are you sure you want to delete?");
+        if (r == true) {
+          localDb.get(this.id).then(function (doc) {
+            setTimeout(1000);
+            window.location.reload();
+            return localDb.remove(doc);
+          });
+        }
+      }
+
+
+
+      // create cell text
+      var itemTextName = document.createTextNode(item.getItemName());
+      var itemTextNote = document.createTextNode(item.getNote());
+      tdName.appendChild(itemTextName);
+      tdNote.appendChild(itemTextNote);
+      tdBtns.appendChild(editBtn);
+      tdBtns.appendChild(delBtn);
+
+      //add children to tr tag (row)
+      tr.appendChild(tdName);
+      tr.appendChild(tdNote);
+      tr.appendChild(tdBtns);
+
+    }
+  }
+
+  function refreshdb() {
+    var ingredient;
+    var item;
+
+    localDb.allDocs({
+      include_docs: true,
+    }).then(function (result) {
+      ingredients = JSON.parse(JSON.stringify(result));
+      for (ingredient in ingredients.rows) {
+        item = new Item();
+        item.setDbId(ingredients.rows[ingredient].doc._id);
+        item.setItemName(ingredients.rows[ingredient].doc.item_name)
+        item.setDepartment(ingredients.rows[ingredient].doc.dept);
+        if (ingredients.rows[ingredient].doc.notes == undefined) {
+          item.setNote("");
+        } else {
+          console.log(ingredients.rows[ingredient].doc.notes);
+          item.setNote(ingredients.rows[ingredient].doc.notes);
+        }
+        allItemsArray.push(item);
+      }
+      listIngredients();
+    })
+  }
+
+  var changes = localDb.changes({
+    since: 'now',
+    live: true,
+    include_docs: true
+  }).on('change', function (change) {
+    window.location.reload();
+  })
+
+</script>
+
+</html>

@@ -1,0 +1,9 @@
+#directories
+node_modules
+ingredients
+dist
+
+#files
+#ignore backup files ending with ~ made by text editors
+*~
+shoppingList.pdf
